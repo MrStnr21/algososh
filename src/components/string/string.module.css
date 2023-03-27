@@ -1,0 +1,23 @@
+.inputContainer {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 522px;
+  min-height: 86px;
+  display: flex;
+  column-gap: 12px;
+}
+
+.input {
+  margin: 0;
+  padding: 0;
+  width: 377px;
+  min-height: 60px;
+}
+
+.lettersContainer {
+  margin: 0 auto;
+  padding-top: 120px;
+  width: fit-content;
+  display: flex;
+  gap: 16px;
+}
