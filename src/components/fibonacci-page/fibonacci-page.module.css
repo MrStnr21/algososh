@@ -1,0 +1,26 @@
+.inputContainer {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 522px;
+  min-height: 86px;
+  display: flex;
+  column-gap: 12px;
+}
+
+.input {
+  margin: 0;
+  padding: 0;
+  width: 377px;
+  min-height: 60px;
+}
+
+.numbersContainer {
+  margin: 0 auto;
+  padding-top: 48px;
+  max-width: 944px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 48px;
+}
