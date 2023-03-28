@@ -1,0 +1,32 @@
+.inputContainer {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 924px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.radioInputContainer {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  column-gap: 40px;
+}
+
+.sortingDirectionContainer {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  column-gap: 12px;
+}
+
+.resultContainer {
+  margin: 0 auto;
+  padding-top: 48px;
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+  align-items: flex-end;
+}

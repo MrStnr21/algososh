@@ -10,6 +10,7 @@ import { Circle } from "../ui/circle/circle";
 export const FibonacciPage: React.FC = () => {
   const [displayArr, setDisplayArr] = useState<number[]>([]);
   const [num, setNum] = useState<any>("");
+
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const [disableInput, setDisableInput] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);

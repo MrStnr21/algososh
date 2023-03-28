@@ -18,6 +18,7 @@ interface IString {
 export const StringComponent: React.FC = () => {
   const [displayArr, setDisplayArr] = useState<IString[]>([]);
   const [str, setStr] = useState<string>("");
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
