@@ -1,16 +1,5 @@
+import { IQueue, IQueueElement } from "../../types/queue";
 import { ElementStates } from "../../types/element-states";
-
-interface IQueueElement {
-  value: number | string;
-  state: ElementStates;
-}
-// eslint-disable-next-line
-interface IQueue<T> {
-  enqueue: (data: string) => void;
-  dequeue: () => void;
-  clear: () => void;
-  changeState: (i: number, state: ElementStates) => void;
-}
 
 class Queue<T> implements IQueue<T> {
   private container: IQueueElement[];

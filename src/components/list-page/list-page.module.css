@@ -1,0 +1,56 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 952px;
+  margin: 0 auto;
+  row-gap: 12px;
+}
+
+.inputForm {
+  display: flex;
+  gap: 8px;
+}
+
+.inputForm button {
+  width: 100%;
+}
+
+.inputForm input {
+  width: 204px;
+}
+
+.inputForm div {
+  width: 204px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  gap: 16px;
+}
+
+.arrList {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.circle_top {
+  position: absolute;
+  top: -65px;
+  left: 13px;
+  padding: 0;
+}
+
+.circle_bottom {
+  position: absolute;
+  top: 125px;
+  left: 10px;
+}

@@ -8,39 +8,37 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 
-import { ElementStates } from "../../types/element-states";
+import { swap } from "../utils/data";
+import { DELAY_IN_MS } from "../../constants/delays";
 
-interface IString {
-  letter: string;
-  state: ElementStates;
-}
+import { ElementStates } from "../../types/element-states";
+import { IString } from "../../types/string";
 
 export const StringComponent: React.FC = () => {
-  const [displayArr, setDisplayArr] = useState<IString[]>([]);
-  const [str, setStr] = useState<string>("");
+  const [stringArr, setStringArr] = useState<IString[]>([]);
+
+  const [inputString, setInputString] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setStr(evt.target.value);
+    setInputString(evt.target.value);
   };
 
-  //свапаем элементы местами
-  const swap = (arr: IString[], firstIndex: number, secondIndex: number) => {
-    let temp = arr[firstIndex];
-    arr[firstIndex] = arr[secondIndex];
-    arr[secondIndex] = temp;
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    handleClick();
   };
 
   const handleClick = () => {
     let firstIndex = 0;
-    let secondIndex = str.length - 1;
-    let time = 1000;
+    let secondIndex = inputString.length - 1;
+    let time = DELAY_IN_MS;
 
-    const inputArr = Array.from(str);
+    const inputArr = Array.from(inputString);
     const outputArr: IString[] = [];
 
-    setStr("");
+    setInputString("");
     setIsLoading(true);
 
     inputArr.forEach((item, index) => {
@@ -51,7 +49,7 @@ export const StringComponent: React.FC = () => {
       outputArr.push(node);
     });
 
-    setDisplayArr([...outputArr]);
+    setStringArr([...outputArr]);
 
     setTimeout(() => {
       while (firstIndex <= secondIndex) {
@@ -73,13 +71,13 @@ export const StringComponent: React.FC = () => {
       setTimeout(() => {
         arr[firstIndex].state = ElementStates.Changing;
         arr[secondIndex].state = ElementStates.Changing;
-        setDisplayArr([...arr]);
+        setStringArr([...arr]);
       }, time);
       setTimeout(() => {
         swap(arr, firstIndex, secondIndex);
         arr[firstIndex].state = ElementStates.Modified;
         arr[secondIndex].state = ElementStates.Modified;
-        setDisplayArr([...arr]);
+        setStringArr([...arr]);
       }, time + 1000);
       if (firstIndex + 1 === secondIndex || firstIndex === secondIndex) {
         setTimeout(() => {
@@ -91,24 +89,24 @@ export const StringComponent: React.FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={styleString.inputContainer}>
+      <form className={styleString.inputContainer} onSubmit={handleSubmit}>
         <Input
           onChange={onChange}
           maxLength={11}
           placeholder="Введите текст"
           isLimitText={true}
           id="string-input"
-          value={str}
+          value={inputString}
         />
         <Button
           onClick={handleClick}
           text={"Развернуть"}
-          disabled={str.length > 0 ? false : true}
+          disabled={inputString.length > 0 ? false : true}
           isLoader={isLoading}
         />
       </form>
       <div className={styleString.lettersContainer}>
-        {displayArr.map((item, index) => {
+        {stringArr.map((item, index) => {
           return (
             <Circle state={item?.state} letter={item?.letter} key={index} />
           );

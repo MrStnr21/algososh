@@ -1,9 +1,4 @@
-export interface IStack<T> {
-  push: (item: T) => void;
-  pop: () => void;
-  getElements: () => (T | null)[];
-  clear: () => void;
-}
+import { IStack } from "../../types/stack";
 
 class Stack<T> implements IStack<T> {
   private container: T[] = [];

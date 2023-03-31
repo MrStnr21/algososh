@@ -8,14 +8,18 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 import { ElementStates } from "../../types/element-states";
 
 export const StackPage: React.FC = () => {
   const [stackArr, setStackArr] = useState<Array<string>>([]);
-  const [value, setValue] = useState<string>("");
+
+  const [inputValue, setInputValue] = useState<string>("");
+
   const [color, setColor] = useState<ElementStates>(ElementStates.Default);
-  const time = 500;
+
+  const time = SHORT_DELAY_IN_MS;
 
   const stack = useMemo(() => {
     return new Stack<string>();
@@ -23,13 +27,13 @@ export const StackPage: React.FC = () => {
 
   const handleInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
-    setValue(value);
+    setInputValue(value);
   };
 
   //добавляем элемент
   const handleAdd = () => {
-    stack.push(value);
-    setValue("");
+    stack.push(inputValue);
+    setInputValue("");
     setTimeout(() => {
       setColor(ElementStates.Changing);
       setStackArr([...stack.getElements()]);
@@ -55,8 +59,8 @@ export const StackPage: React.FC = () => {
 
   //очищаем стек
   const handleClear = () => {
-    stack.clear();
     setStackArr([]);
+    stack.clear();
   };
 
   return (
@@ -69,7 +73,7 @@ export const StackPage: React.FC = () => {
             isLimitText={true}
             id="stack-input"
             onChange={handleInput}
-            value={value}
+            value={inputValue}
           />
           <Button onClick={handleAdd} text={"Добавить"} />
           <Button onClick={handleDelete} text={"Удалить"} />

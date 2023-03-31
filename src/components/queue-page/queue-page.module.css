@@ -1,28 +1,28 @@
 .inputContainer {
-    margin: 0 auto;
-    padding: 0;
-    max-width: 829px;
-    min-height: 60px;
-    display: flex;
-    justify-content: space-between;
-    column-gap: 12px;
-  }
-  
-  .addRemoveContainer {
-    margin: 0;
-    padding: 0;
-    width: 630px;
-    display: flex;
-    column-gap: 12px;
-  }
-  
-  .stackContainer {
-      margin: 0 auto;
-      padding-top: 48px;
-      max-width: 944px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      column-gap: 16px;
-      row-gap: 48px;
-    }
+  margin: 0 auto;
+  padding: 0;
+  max-width: 829px;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  column-gap: 12px;
+}
+
+.addRemoveContainer {
+  margin: 0;
+  padding: 0;
+  width: 630px;
+  display: flex;
+  column-gap: 12px;
+}
+
+.stackContainer {
+  margin: 0 auto;
+  padding-top: 48px;
+  max-width: 944px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 48px;
+}

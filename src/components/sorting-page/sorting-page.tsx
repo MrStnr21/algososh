@@ -8,23 +8,22 @@ import { RadioInput } from "../ui/radio-input/radio-input";
 import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 
-import { ElementStates } from "../../types/element-states";
+import { sleep } from "../utils/utils";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
-interface IQueueElement {
-  value: number | string;
-  state: ElementStates;
-}
+import { ElementStates } from "../../types/element-states";
+import { IQueueElement } from "../../types/queue";
 
 export const SortingPage: React.FC = () => {
-  const [renderArr, setRenderArr] = useState<IQueueElement[]>([]);
+  const [sortingArr, setSortingArr] = useState<IQueueElement[]>([]);
+  const [typeSort, setTypeSort] = useState<string>("selection");
 
   const [sortAscLoading, setSortAscLoading] = useState<boolean>(false);
   const [sortDescLoading, setSortDescLoading] = useState<boolean>(false);
+
   const [disableInput, setDisableInput] = useState<boolean>(false);
 
-  const [typeSort, setTypeSort] = useState<string>("selection");
-
-  const time = 500;
+  const time = SHORT_DELAY_IN_MS;
 
   //генератор рандомного числа
   const randomNumber = (min: number, max: number) => {
@@ -56,18 +55,13 @@ export const SortingPage: React.FC = () => {
   };
 
   useEffect(() => {
-    setRenderArr([...newArr(1, 100)]);
+    setSortingArr([...newArr(1, 100)]);
     // eslint-disable-next-line
   }, []);
 
   const handleRandom = () => {
-    setRenderArr([...newArr(1, 100)]);
+    setSortingArr([...newArr(1, 100)]);
   };
-
-  //пауза между шагами цикла
-  function sleep(time: number) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
 
   //сортировка выбором
   const selectionSort = async (arr: IQueueElement[], sortingType: string) => {
@@ -80,7 +74,7 @@ export const SortingPage: React.FC = () => {
     for (let i = 0; i < arr.length; i++) {
       let minIdx = i;
       arr[i].state = ElementStates.Changing;
-      setRenderArr([...arr]);
+      setSortingArr([...arr]);
       for (let j = i + 1; j < arr.length; j++) {
         if (
           sortingType === "asc"
@@ -90,14 +84,14 @@ export const SortingPage: React.FC = () => {
           minIdx = j;
         }
         arr[j].state = ElementStates.Changing;
-        setRenderArr([...arr]);
+        setSortingArr([...arr]);
         await sleep(time);
         arr[j].state = ElementStates.Default;
       }
       arr[i].state = ElementStates.Default;
       [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
       arr[i].state = ElementStates.Modified;
-      setRenderArr([...arr]);
+      setSortingArr([...arr]);
       if (i === arr.length - 1) {
         setDisableInput(false);
         setSortAscLoading(false);
@@ -118,7 +112,7 @@ export const SortingPage: React.FC = () => {
       for (let j = 0; j < arr.length - i - 1; j++) {
         arr[j].state = ElementStates.Changing;
         arr[j + 1].state = ElementStates.Changing;
-        setRenderArr([...arr]);
+        setSortingArr([...arr]);
         await sleep(time);
         if (
           sortingType === "asc"
@@ -126,16 +120,16 @@ export const SortingPage: React.FC = () => {
             : arr[j].value < arr[j + 1].value
         ) {
           [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          setRenderArr([...arr]);
+          setSortingArr([...arr]);
           await sleep(time);
         }
         arr[j].state = ElementStates.Default;
         arr[j + 1].state = ElementStates.Default;
-        setRenderArr([...arr]);
+        setSortingArr([...arr]);
         await sleep(time);
       }
       arr[arr.length - 1 - i].state = ElementStates.Modified;
-      setRenderArr([...arr]);
+      setSortingArr([...arr]);
       if (i + 1 === arr.length - 1) {
         setDisableInput(false);
         setSortAscLoading(false);
@@ -144,7 +138,7 @@ export const SortingPage: React.FC = () => {
     }
     arr[0].state = ElementStates.Modified;
     arr[arr.length - 1].state = ElementStates.Modified;
-    setRenderArr([...arr]);
+    setSortingArr([...arr]);
   };
 
   const handleSort = (arr: IQueueElement[], sortingType: string) => {
@@ -175,14 +169,14 @@ export const SortingPage: React.FC = () => {
         </div>
         <div className={styleSortingPage.sortingDirectionContainer}>
           <Button
-            onClick={() => handleSort(renderArr, "asc")}
+            onClick={() => handleSort(sortingArr, "asc")}
             sorting={Direction.Ascending}
             text={"По возрастанию"}
             disabled={disableInput}
             isLoader={sortAscLoading}
           />
           <Button
-            onClick={() => handleSort(renderArr, "desc")}
+            onClick={() => handleSort(sortingArr, "desc")}
             sorting={Direction.Descending}
             text={"По убыванию"}
             disabled={disableInput}
@@ -196,8 +190,8 @@ export const SortingPage: React.FC = () => {
         />
       </form>
       <div className={styleSortingPage.resultContainer}>
-        {renderArr.length > 1 &&
-          renderArr.map((item, index) => {
+        {sortingArr.length > 1 &&
+          sortingArr.map((item, index) => {
             return (
               <Column
                 state={item.state}

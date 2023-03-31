@@ -9,23 +9,21 @@ import { Circle } from "../ui/circle/circle";
 
 import { Queue } from "./queue-class";
 
-import { ElementStates } from "../../types/element-states";
+import { sleep } from "../utils/utils";
 
-export interface IQueueElement {
-  value: number | string;
-  state: ElementStates;
-}
+import { ElementStates } from "../../types/element-states";
+import { IQueueElement } from "../../types/queue";
 
 export const QueuePage: React.FC = () => {
   const [queueArr, setQueueArr] = useState<IQueueElement[]>([]);
-  const [input, setInput] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
 
   const [disableButton, setDisableButton] = useState<boolean>(true);
 
   const [isLoadingAdd, setIsLoadingAdd] = useState<boolean>(false);
   const [isLoadingRem, setIsLoadingRem] = useState<boolean>(false);
 
-  const initialQueueArr = [
+  const initialDataQueue = [
     { value: "", state: ElementStates.Default },
     { value: "", state: ElementStates.Default },
     { value: "", state: ElementStates.Default },
@@ -51,20 +49,15 @@ export const QueuePage: React.FC = () => {
 
   const handleInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
-    setInput(value);
+    setInputValue(value);
   };
-
-  //пауза между шагами цикла
-  function sleep(time: number) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
 
   //добавляем элемент
   const handleAdd = async () => {
     setIsLoadingAdd(true);
     setDisableButton(true);
-    setInput("");
-    queue.enqueue(input);
+    setInputValue("");
+    queue.enqueue(inputValue);
     queue.changeState(queue.newestIndex - 1, ElementStates.Changing);
     setQueueArr([...queue.getElements()]);
     await sleep(500);
@@ -90,15 +83,13 @@ export const QueuePage: React.FC = () => {
 
   //очищаем стек
   const handleClear = () => {
-    setDisableButton(true);
     queue.clear();
-    queue.setContainer(initialQueueArr);
+    queue.setContainer(initialDataQueue);
     setQueueArr([...queue.getElements()]);
-    setDisableButton(false);
   };
 
   useEffect(() => {
-    queue.setContainer(initialQueueArr);
+    queue.setContainer(initialDataQueue);
     setQueueArr([...queue.getElements()]);
     // eslint-disable-next-line
   }, []);
@@ -118,12 +109,12 @@ export const QueuePage: React.FC = () => {
             isLimitText={true}
             id="stack-input"
             onChange={handleInput}
-            value={input}
+            value={inputValue}
           />
           <Button
             onClick={handleAdd}
             text={"Добавить"}
-            disabled={input.length > 0 ? false : true}
+            disabled={inputValue.length > 0 ? false : true}
             isLoader={isLoadingAdd}
           />
           <Button
