@@ -7,12 +7,13 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { handleSubmit } from "../utils/data";
 
 import { sleep } from "../utils/utils";
 
 export const FibonacciPage: React.FC = () => {
   const [fibonacciArr, setFibonacciArr] = useState<number[]>([]);
-  const [inputValue, setInputValue] = useState<any>("");
+  const [inputValue, setInputValue] = useState<number>(0);
 
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const [disableInput, setDisableInput] = useState<boolean>(false);
@@ -29,7 +30,7 @@ export const FibonacciPage: React.FC = () => {
       }
     } else {
       if (value === 0) {
-        setInputValue("");
+        setInputValue(0);
       }
       setDisableButton(true);
     }
@@ -69,7 +70,10 @@ export const FibonacciPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
-      <form className={styleFibonacciPage.inputContainer}>
+      <form
+        className={styleFibonacciPage.inputContainer}
+        onSubmit={handleSubmit}
+      >
         <Input
           maxLength={19}
           max={19}

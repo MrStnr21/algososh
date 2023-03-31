@@ -10,6 +10,7 @@ import { Circle } from "../ui/circle/circle";
 import { Queue } from "./queue-class";
 
 import { sleep } from "../utils/utils";
+import { handleSubmit } from "../utils/data";
 
 import { ElementStates } from "../../types/element-states";
 import { IQueueElement } from "../../types/queue";
@@ -101,7 +102,7 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
-      <form className={styleQueuePage.inputContainer}>
+      <form className={styleQueuePage.inputContainer} onSubmit={handleSubmit}>
         <div className={styleQueuePage.addRemoveContainer}>
           <Input
             maxLength={4}

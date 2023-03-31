@@ -7,4 +7,9 @@ const swap = (arr: IString[], firstIndex: number, secondIndex: number) => {
   arr[secondIndex] = temp;
 };
 
-export { swap };
+//отключаем автосабмит и пустые инпуты
+const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  evt.preventDefault();
+};
+
+export { swap, handleSubmit };

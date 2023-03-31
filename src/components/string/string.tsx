@@ -10,6 +10,7 @@ import { Circle } from "../ui/circle/circle";
 
 import { swap } from "../utils/data";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { handleSubmit } from "../utils/data";
 
 import { ElementStates } from "../../types/element-states";
 import { IString } from "../../types/string";
@@ -23,11 +24,6 @@ export const StringComponent: React.FC = () => {
 
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setInputString(evt.target.value);
-  };
-
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    handleClick();
   };
 
   const handleClick = () => {
@@ -93,6 +89,8 @@ export const StringComponent: React.FC = () => {
         <Input
           onChange={onChange}
           maxLength={11}
+          max={11}
+          min={1}
           placeholder="Введите текст"
           isLimitText={true}
           id="string-input"

@@ -20,6 +20,7 @@ export const SortingPage: React.FC = () => {
 
   const [sortAscLoading, setSortAscLoading] = useState<boolean>(false);
   const [sortDescLoading, setSortDescLoading] = useState<boolean>(false);
+  const [randomArrloading, setRandomArrloading] = useState<boolean>(false);
 
   const [disableInput, setDisableInput] = useState<boolean>(false);
 
@@ -60,7 +61,9 @@ export const SortingPage: React.FC = () => {
   }, []);
 
   const handleRandom = () => {
+    setRandomArrloading(true);
     setSortingArr([...newArr(1, 100)]);
+    setRandomArrloading(false);
   };
 
   //сортировка выбором
@@ -158,13 +161,14 @@ export const SortingPage: React.FC = () => {
             value="selection"
             disabled={disableInput}
             checked={typeSort === "selection" ? true : false}
-            onClick={() => setTypeSort("selection")}
+            onChange={() => setTypeSort("selection")}
           />
           <RadioInput
             label={"Пузырёк"}
             value="bubble"
             disabled={disableInput}
-            onClick={() => setTypeSort("bubble")}
+            checked={typeSort === "bubble" ? true : false}
+            onChange={() => setTypeSort("bubble")}
           />
         </div>
         <div className={styleSortingPage.sortingDirectionContainer}>
@@ -186,6 +190,7 @@ export const SortingPage: React.FC = () => {
         <Button
           onClick={handleRandom}
           text={"Новый массив"}
+          isLoader={randomArrloading}
           disabled={disableInput}
         />
       </form>

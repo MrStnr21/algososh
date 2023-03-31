@@ -11,6 +11,7 @@ import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { LinkedList } from "./list-class";
 
 import { sleep } from "../utils/utils";
+import { handleSubmit } from "../utils/data";
 
 import { IListElement } from "../../types/list";
 import { ElementStates } from "../../types/element-states";
@@ -284,7 +285,7 @@ export const ListPage: React.FC = () => {
   return (
     <SolutionLayout title="Связный список">
       <div className={styleListPage.inputContainer}>
-        <form className={styleListPage.inputForm}>
+        <form className={styleListPage.inputForm} onSubmit={handleSubmit}>
           <Input
             maxLength={4}
             isLimitText={true}
@@ -318,7 +319,7 @@ export const ListPage: React.FC = () => {
             isLoader={deleteTailLoading}
           />
         </form>
-        <form className={styleListPage.inputForm}>
+        <form className={styleListPage.inputForm} onSubmit={handleSubmit}>
           <Input
             placeholder="Введите индекс"
             id="list-input"
