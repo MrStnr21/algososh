@@ -99,7 +99,7 @@ export const StackPage: React.FC = () => {
             onClick={handleAdd}
             text={"Добавить"}
             isLoader={addLoading}
-            disabled={!disableButton ? false : true}
+            disabled={inputValue ? false : true}
           />
           <Button
             onClick={handleDelete}

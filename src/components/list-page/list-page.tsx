@@ -19,7 +19,7 @@ import { ElementStates } from "../../types/element-states";
 export const ListPage: React.FC = () => {
   const [listArr, setListArr] = useState<IListElement[]>([]);
   const [inputValue, setInputValue] = useState<string | number | undefined>("");
-  const [inputIndex, setInputIndex] = useState<string | number | undefined>("");
+  const [inputIndex, setInputIndex] = useState<number | string>("");
 
   const [displayHead, setDisplayHead] = useState<boolean>(true);
   const [displayTail, setDisplayTail] = useState<boolean>(true);
@@ -267,13 +267,13 @@ export const ListPage: React.FC = () => {
 
   //инпут значения
   const handleInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const value = evt.target.value.trim();
+    const value = evt.target.value;
     setInputValue(value);
   };
 
   //инпут индекса
   const handleInputIndex = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const value = evt.target.value.trim();
+    const value = evt.target.value;
     setInputIndex(value);
   };
 
@@ -324,15 +324,14 @@ export const ListPage: React.FC = () => {
             placeholder="Введите индекс"
             id="list-input"
             onChange={handleInputIndex}
-            value={inputIndex}
+            value={(inputIndex as number) >= 0 ? inputIndex : ""}
           />
           <Button
             text={"Добавить по индексу"}
             onClick={() => handleAddByIndex(inputIndex!, inputValue!)}
             disabled={
-              (inputIndex as number) <= listArr.length - 1 &&
-              (inputIndex as number) >= 0 &&
-              inputIndex &&
+              (inputIndex as number as number) <= listArr.length - 1 &&
+              (inputIndex as number as number) >= 0 &&
               inputIndex &&
               !disableButton
                 ? false
@@ -345,7 +344,6 @@ export const ListPage: React.FC = () => {
             disabled={
               (inputIndex as number) <= listArr.length - 1 &&
               (inputIndex as number) >= 0 &&
-              inputIndex &&
               inputIndex &&
               !disableButton
                 ? false
