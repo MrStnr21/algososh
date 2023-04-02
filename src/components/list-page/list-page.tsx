@@ -323,6 +323,7 @@ export const ListPage: React.FC = () => {
           <Input
             placeholder="Введите индекс"
             id="list-input"
+            type="number"
             onChange={handleInputIndex}
             value={(inputIndex as number) >= 0 ? inputIndex : ""}
           />
