@@ -14,7 +14,7 @@ import { StackPage } from "../stack-page/stack-page";
 function App() {
   return (
     <div className={styleApp.app}>
-      <BrowserRouter>
+      <BrowserRouter basename={window.location.pathname || ""}>
         <Switch>
           <Route path="/" exact>
             <MainPage />
