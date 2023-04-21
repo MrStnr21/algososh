@@ -55,7 +55,7 @@ describe("Test reverse string", () => {
     );
   });
 
-  it("length is 1", () => {
+  it("Length is 1", () => {
     render(
       <BrowserRouter>
         <StringComponent />
