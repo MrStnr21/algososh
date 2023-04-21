@@ -5,10 +5,10 @@ import styleSortingPage from "./sorting-page.module.css";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Button } from "../ui/button/button";
 import { RadioInput } from "../ui/radio-input/radio-input";
-import { Direction } from "../../types/direction";
 import { Column } from "../ui/column/column";
 
 import { IQueueElement } from "../../types/queue";
+import { Direction } from "../../types/direction";
 
 import { newArr, selectionSort, bubbleSort } from "./utils";
 
