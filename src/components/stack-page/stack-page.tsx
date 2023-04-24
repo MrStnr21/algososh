@@ -98,12 +98,14 @@ export const StackPage: React.FC = () => {
           <Button
             onClick={handleAdd}
             text={"Добавить"}
+            data-testid="add"
             isLoader={addLoading}
             disabled={inputValue ? false : true}
           />
           <Button
             onClick={handleDelete}
             text={"Удалить"}
+            data-testid="delete"
             disabled={stackArr.length > 0 && !disableButton ? false : true}
             isLoader={deleteLoading}
           />
@@ -111,6 +113,7 @@ export const StackPage: React.FC = () => {
         <Button
           onClick={handleClear}
           text={"Очистить"}
+          data-testid="reset"
           disabled={stackArr.length > 0 && !disableButton ? false : true}
           isLoader={clearloading}
         />
