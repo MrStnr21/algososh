@@ -4,7 +4,7 @@ import {
   modifiedColor,
 } from "../../src/constants/element-captions";
 
-describe("String", () => {
+describe("String test", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/recursion");
   });
