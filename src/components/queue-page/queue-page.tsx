@@ -115,12 +115,14 @@ export const QueuePage: React.FC = () => {
           <Button
             onClick={handleAdd}
             text={"Добавить"}
+            data-testid="add"
             disabled={inputValue.length > 0 ? false : true}
             isLoader={isLoadingAdd}
           />
           <Button
             onClick={handleDelete}
             text={"Удалить"}
+            data-testid="delete"
             disabled={disableButton}
             isLoader={isLoadingRem}
           />
@@ -128,25 +130,31 @@ export const QueuePage: React.FC = () => {
         <Button
           onClick={handleClear}
           text={"Очистить"}
+          data-testid="reset"
           disabled={queue.newestIndex ? false : true}
         />
       </form>
       <div className={styleQueuePage.stackContainer}>
-        {queue.getElements() &&
-          queue.getElements().map((item, index) => {
-            return (
-              <Circle
-                letter={item.value as string}
-                key={index}
-                head={
-                  item.value !== "" && index === queue.oldestIndex ? "head" : ""
-                }
-                tail={index + 1 === queue.newestIndex ? "tail" : ""}
-                state={item.state}
-                index={index}
-              />
-            );
-          })}
+        <ul className={styleQueuePage.stackList}>
+          {queue.getElements() &&
+            queue.getElements().map((item, index) => {
+              return (
+                <li key={index} className={styleQueuePage.stackItem}>
+                  <Circle
+                    letter={item.value as string}
+                    head={
+                      item.value !== "" && index === queue.oldestIndex
+                        ? "head"
+                        : ""
+                    }
+                    tail={index + 1 === queue.newestIndex ? "tail" : ""}
+                    state={item.state}
+                    index={index}
+                  />
+                </li>
+              );
+            })}
+        </ul>
       </div>
     </SolutionLayout>
   );

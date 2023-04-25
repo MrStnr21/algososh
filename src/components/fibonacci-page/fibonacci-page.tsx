@@ -13,7 +13,7 @@ import { sleep } from "../utils/utils";
 
 export const FibonacciPage: React.FC = () => {
   const [fibonacciArr, setFibonacciArr] = useState<number[]>([]);
-  const [inputValue, setInputValue] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<number | string>("");
 
   const [disableButton, setDisableButton] = useState<boolean>(true);
   const [disableInput, setDisableInput] = useState<boolean>(false);
@@ -30,7 +30,7 @@ export const FibonacciPage: React.FC = () => {
       }
     } else {
       if (value === 0) {
-        setInputValue(0);
+        setInputValue("");
       }
       setDisableButton(true);
     }
@@ -65,7 +65,7 @@ export const FibonacciPage: React.FC = () => {
       }
     };
 
-    fibonacci(inputValue);
+    fibonacci(inputValue as number);
   };
 
   return (
@@ -94,9 +94,15 @@ export const FibonacciPage: React.FC = () => {
         />
       </form>
       <div className={styleFibonacciPage.numbersContainer}>
-        {fibonacciArr.map((item, index) => {
-          return <Circle letter={"" + item} key={index} index={index} />;
-        })}
+        <ul className={styleFibonacciPage.numbersList}>
+          {fibonacciArr.map((item, index) => {
+            return (
+              <li key={index} className={styleFibonacciPage.numbersItem}>
+                <Circle letter={"" + item} key={index} index={index} />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </SolutionLayout>
   );

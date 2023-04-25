@@ -9,6 +9,7 @@ describe("String test", () => {
     cy.visit("http://localhost:3000/recursion");
   });
 
+  //отключение кнопок
   it("Disabled if empty", () => {
     cy.get("input").should("be.empty");
     cy.get("form").find("button").should("be.disabled");
@@ -17,6 +18,7 @@ describe("String test", () => {
     cy.get("form").find("button").should("not.be.disabled");
   });
 
+  //рекурсия
   it("Correct recursion", () => {
     cy.get("input").type("oturan");
     cy.get("form").find("button").should("not.be.disabled").click();

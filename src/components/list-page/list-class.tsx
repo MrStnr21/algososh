@@ -45,15 +45,10 @@ class LinkedList<T> implements IList<T> {
     this.container = [...arr];
   };
 
-  prepend = async (input: string | number) => {
+  prepend = async (input: IListElement) => {
     const arr = this.container;
 
-    arr.unshift({
-      value: input,
-      state: ElementStates.Default,
-      circle: null,
-      circleBottom: false,
-    });
+    arr.unshift(input);
     this.container = [...arr];
   };
 

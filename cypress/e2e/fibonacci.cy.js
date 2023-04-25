@@ -5,11 +5,13 @@ describe("Fibonacci test", () => {
     cy.visit("http://localhost:3000/fibonacci");
   });
 
+  //отключение кнопок
   it("Disabled if empty", () => {
     cy.get("input").should("be.empty");
     cy.get("form").find("button").should("be.disabled");
   });
 
+  //корректная отрисовка массива
   it("Correct fibonacci array", () => {
     cy.get("input").type("5");
     cy.get("form").find("button").should("not.be.disabled").click();

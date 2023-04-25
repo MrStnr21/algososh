@@ -18,9 +18,20 @@
   margin: 0 auto;
   padding-top: 48px;
   max-width: 944px;
+}
+
+.numbersList {
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   column-gap: 16px;
   row-gap: 48px;
+}
+
+.numbersItem {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }

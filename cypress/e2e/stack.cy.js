@@ -8,11 +8,13 @@ describe("Stack test", () => {
     cy.visit("http://localhost:3000/stack");
   });
 
+  //отключение кнопок
   it("Disabled if empty", () => {
     cy.get("input").should("be.empty");
     cy.get("form").find('button[data-testid="add"]').should("be.disabled");
   });
 
+  //добавление элемента
   it("Correct adding element", () => {
     cy.get("input").type("21");
     cy.get("form")
@@ -37,6 +39,7 @@ describe("Stack test", () => {
     });
   });
 
+  //удаление элемента
   it("Correct deleting element", () => {
     cy.get("input").type("21");
     cy.get("form")
@@ -62,6 +65,7 @@ describe("Stack test", () => {
     });
   });
 
+  //сброс стека
   it("Correct reseting stack", () => {
     for (let i = 0; i < 3; i++) {
       cy.get("input").type(i);
