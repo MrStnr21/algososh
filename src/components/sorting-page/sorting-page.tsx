@@ -120,16 +120,20 @@ export const SortingPage: React.FC = () => {
         />
       </form>
       <div className={styleSortingPage.resultContainer}>
-        {sortingArr.length > 1 &&
-          sortingArr.map((item, index) => {
-            return (
-              <Column
-                state={item.state}
-                index={item.value as number}
-                key={index}
-              />
-            );
-          })}
+        <ul className={styleSortingPage.resultList}>
+          {sortingArr.length > 1 &&
+            sortingArr.map((item, index) => {
+              return (
+                <li key={index} className={styleSortingPage.resultItem}>
+                  <Column
+                    state={item.state}
+                    index={item.value as number}
+                    key={index}
+                  />
+                </li>
+              );
+            })}
+        </ul>
       </div>
     </SolutionLayout>
   );

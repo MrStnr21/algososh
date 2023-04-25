@@ -7,6 +7,7 @@ import { StringComponent } from "./string";
 import { DELAY_IN_MS } from "../../constants/delays";
 
 describe("Test reverse string", () => {
+  //четная длина строки
   it("Even length", () => {
     render(
       <BrowserRouter>
@@ -31,6 +32,7 @@ describe("Test reverse string", () => {
     );
   });
 
+  //нечетная длина строки
   it("Odd length", () => {
     render(
       <BrowserRouter>
@@ -55,6 +57,7 @@ describe("Test reverse string", () => {
     );
   });
 
+  //длина строки 1
   it("Length is 1", () => {
     render(
       <BrowserRouter>
@@ -79,6 +82,7 @@ describe("Test reverse string", () => {
     );
   });
 
+  //пустая строка
   it("Empty", () => {
     render(
       <BrowserRouter>

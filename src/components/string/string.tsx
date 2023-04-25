@@ -106,16 +106,20 @@ export const StringComponent: React.FC = () => {
         />
       </form>
       <div className={styleString.lettersContainer}>
-        {stringArr.map((item, index) => {
-          return (
-            <Circle
-              state={item?.state}
-              letter={item?.letter}
-              key={index}
-              data-testid="circle"
-            />
-          );
-        })}
+        <ul className={styleString.lettersList}>
+          {stringArr.map((item, index) => {
+            return (
+              <li key={index} className={styleString.lettersItem}>
+                <Circle
+                  state={item?.state}
+                  letter={item?.letter}
+                  key={index}
+                  data-testid="circle"
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </SolutionLayout>
   );
