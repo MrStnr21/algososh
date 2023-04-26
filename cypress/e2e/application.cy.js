@@ -1,6 +1,6 @@
-describe("application is available", () => {
+describe("application starts successfully", () => {
   //запуск приложения
-  it("should be available on localhost:3000", () => {
+  it("Available on localhost:3000", () => {
     cy.visit("http://localhost:3000");
   });
 });
