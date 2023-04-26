@@ -2,11 +2,12 @@ import {
   defaultColor,
   changingColor,
   modifiedColor,
+  circle,
 } from "../../src/constants/element-captions";
 
 describe("String test", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/recursion");
+    cy.visit("recursion");
   });
 
   //отключение кнопок
@@ -23,7 +24,7 @@ describe("String test", () => {
     cy.get("input").type("oturan");
     cy.get("form").find("button").should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
+    cy.get(circle).as("circles");
 
     cy.get("@circles").should(($circles) => {
       expect($circles).to.have.length(6);

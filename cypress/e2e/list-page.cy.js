@@ -2,29 +2,39 @@ import {
   defaultColor,
   changingColor,
   modifiedColor,
+  circle,
+  circleSmall,
+  inputValue,
+  inputIndex,
+  buttonAddHead,
+  buttonAddTail,
+  buttonAddByIndex,
+  buttonDeleteHead,
+  buttonDeleteTail,
+  buttonDeleteByIndex,
 } from "../../src/constants/element-captions";
 
 describe("List test", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/list");
+    cy.visit("list");
   });
 
   //отключение кнопок
   it("Disabled if input empty", () => {
-    cy.get('input[placeholder="Введите значение"]').should("be.empty");
-    cy.get('button[data-testid="add-head"]').should("be.disabled");
-    cy.get('button[data-testid="add-tail"]').should("be.disabled");
+    cy.get(inputValue).should("be.empty");
+    cy.get(buttonAddHead).should("be.disabled");
+    cy.get(buttonAddTail).should("be.disabled");
   });
 
   //отключение кнопок
   it("Disabled if index empty", () => {
-    cy.get('input[placeholder="Введите индекс"]').should("be.empty");
-    cy.get('button[data-testid="add-by-index"]').should("be.disabled");
+    cy.get(inputIndex).should("be.empty");
+    cy.get(buttonAddByIndex).should("be.disabled");
   });
 
   //отрисовка дефолтного списка
   it("Showing default list", () => {
-    cy.get('[class^="circle_circle"]').as("circles");
+    cy.get(circle).as("circles");
 
     cy.get("@circles").each(($circles) => {
       expect($circles).to.have.css("border-color", defaultColor);
@@ -36,11 +46,11 @@ describe("List test", () => {
 
   //добавление элемента в head
   it("Adding element in head", () => {
-    cy.get('input[placeholder="Введите значение"]').type("21");
-    cy.get('button[data-testid="add-head"]').should("not.be.disabled").click();
+    cy.get(inputValue).type("21");
+    cy.get(buttonAddHead).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
-    cy.get('[class*="circle_small"]').as("circleSmall");
+    cy.get(circle).as("circles");
+    cy.get(circleSmall).as("circleSmall");
 
     cy.get("@circleSmall").should(($circle) => {
       expect($circle)
@@ -67,11 +77,11 @@ describe("List test", () => {
 
   //добавление элемента в tail
   it("Adding element in tail", () => {
-    cy.get('input[placeholder="Введите значение"]').type("21");
-    cy.get('button[data-testid="add-tail"]').should("not.be.disabled").click();
+    cy.get(inputValue).type("21");
+    cy.get(buttonAddTail).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
-    cy.get('[class*="circle_small"]').as("circleSmall");
+    cy.get(circle).as("circles");
+    cy.get(circleSmall).as("circleSmall");
 
     cy.get("@circleSmall").should(($circle) => {
       expect($circle)
@@ -100,12 +110,10 @@ describe("List test", () => {
 
   //удаление элемента из head
   it("Deleting element from head", () => {
-    cy.get('button[data-testid="delete-head"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get(buttonDeleteHead).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
-    cy.get('[class*="circle_small"]').as("circleSmall");
+    cy.get(circle).as("circles");
+    cy.get(circleSmall).as("circleSmall");
 
     cy.get("@circles").should(($circles) => {
       expect($circles[0]).to.contain("");
@@ -128,12 +136,10 @@ describe("List test", () => {
 
   //удаление элемента из tail
   it("Deleting element from tail", () => {
-    cy.get('button[data-testid="delete-tail"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get(buttonDeleteTail).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
-    cy.get('[class*="circle_small"]').as("circleSmall");
+    cy.get(circle).as("circles");
+    cy.get(circleSmall).as("circleSmall");
 
     cy.get("@circles").should(($circles) => {
       expect($circles[3]).to.contain("");
@@ -156,15 +162,13 @@ describe("List test", () => {
 
   //добавление элемента по индексу
   it("Adding element by index", () => {
-    cy.get("input[placeholder='Введите значение']").type("21");
-    cy.get("input[placeholder='Введите индекс']").type(2);
+    cy.get(inputValue).type("21");
+    cy.get(inputIndex).type(2);
 
-    cy.get('button[data-testid="add-by-index"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get(buttonAddByIndex).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
-    cy.get('[class*="circle_small"]').as("circleSmall");
+    cy.get(circle).as("circles");
+    cy.get(circleSmall).as("circleSmall");
 
     for (let i = 0; i < 2; i++) {
       cy.get("@circles").should(($circles) => {
@@ -199,14 +203,12 @@ describe("List test", () => {
 
   //удаление элемента по индексу
   it("deleting element by index", () => {
-    cy.get("input[placeholder='Введите индекс']").type("2");
+    cy.get(inputIndex).type("2");
 
-    cy.get('button[data-testid="delete-by-index"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get(buttonDeleteByIndex).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
-    cy.get('[class*="circle_small"]').as("circleSmall");
+    cy.get(circle).as("circles");
+    cy.get(circleSmall).as("circleSmall");
 
     cy.get("@circleSmall").should(($circleSmall) => {
       expect($circleSmall)

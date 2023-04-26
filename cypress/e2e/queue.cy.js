@@ -1,26 +1,30 @@
 import {
   defaultColor,
   changingColor,
+  buttonAdd,
+  circle,
+  buttonDelete,
+  buttonReset,
 } from "../../src/constants/element-captions";
 
 describe("Queue test", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/queue");
+    cy.visit("queue");
   });
 
   //отключение кнопок
   it("Disabled if empty", () => {
     cy.get("input").should("be.empty");
-    cy.get('button[data-testid="add"]').should("be.disabled");
+    cy.get(buttonAdd).should("be.disabled");
   });
 
   //добавление элемента
   it("Correct adding element", () => {
     for (let i = 0; i < 7; i++) {
       cy.get("input").type(i);
-      cy.get('button[data-testid="add"]').should("not.be.disabled").click();
+      cy.get(buttonAdd).should("not.be.disabled").click();
 
-      cy.get('[class^="circle_circle"]').as("circles");
+      cy.get(circle).as("circles");
 
       cy.get("@circles").should(($circles) => {
         expect($circles[i])
@@ -37,7 +41,7 @@ describe("Queue test", () => {
       });
     }
 
-    cy.get('[class^="circle_circle"]').as("circles");
+    cy.get(circle).as("circles");
 
     cy.get("li").eq(0).should("contain", "head");
     cy.get("li").eq(-1).should("contain", "tail");
@@ -47,9 +51,9 @@ describe("Queue test", () => {
   it("Correct deleting element", () => {
     for (let i = 0; i < 3; i++) {
       cy.get("input").type(i);
-      cy.get('button[data-testid="add"]').should("not.be.disabled").click();
+      cy.get(buttonAdd).should("not.be.disabled").click();
 
-      cy.get('[class^="circle_circle"]').as("circles");
+      cy.get(circle).as("circles");
 
       cy.get("@circles").should(($circles) => {
         expect($circles[i])
@@ -66,12 +70,9 @@ describe("Queue test", () => {
       });
     }
 
-    cy.get("form")
-      .find('button[data-testid="delete"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get("form").find(buttonDelete).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
+    cy.get(circle).as("circles");
 
     cy.get("@circles").should(($circles) => {
       expect($circles[0])
@@ -92,9 +93,9 @@ describe("Queue test", () => {
   it("Correct reseting stack", () => {
     for (let i = 0; i < 3; i++) {
       cy.get("input").type(i);
-      cy.get('button[data-testid="add"]').should("not.be.disabled").click();
+      cy.get(buttonAdd).should("not.be.disabled").click();
 
-      cy.get('[class^="circle_circle"]').as("circles");
+      cy.get(circle).as("circles");
 
       cy.get("@circles").should(($circles) => {
         expect($circles[i])
@@ -111,12 +112,9 @@ describe("Queue test", () => {
       });
     }
 
-    cy.get("form")
-      .find('button[data-testid="reset"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get("form").find(buttonReset).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
+    cy.get(circle).as("circles");
 
     cy.get("@circles").should(($circles) => {
       expect($circles).to.contain("");

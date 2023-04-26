@@ -1,28 +1,29 @@
 import {
   defaultColor,
   changingColor,
+  circle,
+  buttonAdd,
+  buttonDelete,
+  buttonReset,
 } from "../../src/constants/element-captions";
 
 describe("Stack test", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/stack");
+    cy.visit("stack");
   });
 
   //отключение кнопок
   it("Disabled if empty", () => {
     cy.get("input").should("be.empty");
-    cy.get("form").find('button[data-testid="add"]').should("be.disabled");
+    cy.get("form").find(buttonAdd).should("be.disabled");
   });
 
   //добавление элемента
   it("Correct adding element", () => {
     cy.get("input").type("21");
-    cy.get("form")
-      .find('button[data-testid="add"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get("form").find(buttonAdd).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circle");
+    cy.get(circle).as("circle");
 
     cy.get("@circle").should(($circle) => {
       expect($circle).to.have.length(1);
@@ -42,17 +43,11 @@ describe("Stack test", () => {
   //удаление элемента
   it("Correct deleting element", () => {
     cy.get("input").type("21");
-    cy.get("form")
-      .find('button[data-testid="add"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get("form").find(buttonAdd).should("not.be.disabled").click();
 
-    cy.get("form")
-      .find('button[data-testid="delete"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get("form").find(buttonDelete).should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circle");
+    cy.get(circle).as("circle");
 
     cy.get("@circle").should(($circle) => {
       expect($circle).to.have.css("border-color", changingColor);
@@ -69,15 +64,9 @@ describe("Stack test", () => {
   it("Correct reseting stack", () => {
     for (let i = 0; i < 3; i++) {
       cy.get("input").type(i);
-      cy.get("form")
-        .find('button[data-testid="add"]')
-        .should("not.be.disabled")
-        .click();
+      cy.get("form").find(buttonAdd).should("not.be.disabled").click();
     }
 
-    cy.get("form")
-      .find('button[data-testid="reset"]')
-      .should("not.be.disabled")
-      .click();
+    cy.get("form").find(buttonReset).should("not.be.disabled").click();
   });
 });

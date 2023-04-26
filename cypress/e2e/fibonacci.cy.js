@@ -1,8 +1,8 @@
-import { defaultColor } from "../../src/constants/element-captions";
+import { defaultColor, circle } from "../../src/constants/element-captions";
 
 describe("Fibonacci test", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/fibonacci");
+    cy.visit("fibonacci");
   });
 
   //отключение кнопок
@@ -16,7 +16,7 @@ describe("Fibonacci test", () => {
     cy.get("input").type("5");
     cy.get("form").find("button").should("not.be.disabled").click();
 
-    cy.get('[class^="circle_circle"]').as("circles");
+    cy.get(circle).as("circles");
 
     cy.get("@circles").should(($circles) => {
       expect($circles).to.have.length(6);
