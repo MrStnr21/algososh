@@ -27,8 +27,6 @@ export const StackPage: React.FC = () => {
 
   const [color, setColor] = useState<ElementStates>(ElementStates.Default);
 
-  const time = SHORT_DELAY_IN_MS;
-
   const stack = useMemo(() => {
     return new Stack<string>();
   }, []);
@@ -52,8 +50,8 @@ export const StackPage: React.FC = () => {
         setStackArr([...stack.getElements()]);
         setAddLoading(false);
         setDisableButton(false);
-      }, time);
-    }, time);
+      }, SHORT_DELAY_IN_MS);
+    }, SHORT_DELAY_IN_MS);
   };
 
   //удаляем элемент
@@ -69,8 +67,8 @@ export const StackPage: React.FC = () => {
         setStackArr([...stack.getElements()]);
         setDeleteLoading(false);
         setDisableButton(false);
-      }, time);
-    }, time);
+      }, SHORT_DELAY_IN_MS);
+    }, SHORT_DELAY_IN_MS);
   };
 
   //очищаем стек
@@ -98,12 +96,14 @@ export const StackPage: React.FC = () => {
           <Button
             onClick={handleAdd}
             text={"Добавить"}
+            data-testid="add"
             isLoader={addLoading}
             disabled={inputValue ? false : true}
           />
           <Button
             onClick={handleDelete}
             text={"Удалить"}
+            data-testid="delete"
             disabled={stackArr.length > 0 && !disableButton ? false : true}
             isLoader={deleteLoading}
           />
@@ -111,25 +111,32 @@ export const StackPage: React.FC = () => {
         <Button
           onClick={handleClear}
           text={"Очистить"}
+          data-testid="reset"
           disabled={stackArr.length > 0 && !disableButton ? false : true}
           isLoader={clearloading}
         />
       </form>
       <div className={styleStackPage.stackContainer}>
-        {stack.getElements().length > 0 &&
-          stack.getElements().map((item, index) => {
-            return (
-              <Circle
-                letter={item}
-                key={index}
-                head={index === stackArr.length - 1 ? "top" : ""}
-                state={
-                  stackArr.length - 1 === index ? color : ElementStates.Default
-                }
-                index={index}
-              />
-            );
-          })}
+        <ul className={styleStackPage.stackList}>
+          {stack.getElements().length > 0 &&
+            stack.getElements().map((item, index) => {
+              return (
+                <li key={index} className={styleStackPage.stackItem}>
+                  <Circle
+                    letter={item}
+                    key={index}
+                    head={index === stackArr.length - 1 ? "top" : ""}
+                    state={
+                      stackArr.length - 1 === index
+                        ? color
+                        : ElementStates.Default
+                    }
+                    index={index}
+                  />
+                </li>
+              );
+            })}
+        </ul>
       </div>
     </SolutionLayout>
   );

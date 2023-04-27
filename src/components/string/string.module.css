@@ -11,6 +11,17 @@
   margin: 0 auto;
   padding-top: 120px;
   width: fit-content;
+}
+
+.lettersList {
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: 16px;
+}
+
+.lettersItem {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }

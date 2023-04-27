@@ -87,6 +87,7 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <form className={styleString.inputContainer} onSubmit={handleSubmit}>
         <Input
+          data-testid="string-input"
           onChange={onChange}
           maxLength={11}
           max={11}
@@ -101,14 +102,24 @@ export const StringComponent: React.FC = () => {
           text={"Развернуть"}
           disabled={inputString.length > 0 ? false : true}
           isLoader={isLoading}
+          data-testid="button"
         />
       </form>
       <div className={styleString.lettersContainer}>
-        {stringArr.map((item, index) => {
-          return (
-            <Circle state={item?.state} letter={item?.letter} key={index} />
-          );
-        })}
+        <ul className={styleString.lettersList}>
+          {stringArr.map((item, index) => {
+            return (
+              <li key={index} className={styleString.lettersItem}>
+                <Circle
+                  state={item?.state}
+                  letter={item?.letter}
+                  key={index}
+                  data-testid="circle"
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </SolutionLayout>
   );

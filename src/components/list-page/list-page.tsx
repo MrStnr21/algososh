@@ -42,25 +42,25 @@ export const ListPage: React.FC = () => {
       value: 0,
       state: ElementStates.Default,
       circle: null,
-      circleBottom: false,
+      circleSmall: false,
     },
     {
       value: 34,
       state: ElementStates.Default,
       circle: null,
-      circleBottom: false,
+      circleSmall: false,
     },
     {
       value: 8,
       state: ElementStates.Default,
       circle: null,
-      circleBottom: false,
+      circleSmall: false,
     },
     {
       value: 1,
       state: ElementStates.Default,
       circle: null,
-      circleBottom: false,
+      circleSmall: false,
     },
   ];
 
@@ -135,7 +135,7 @@ export const ListPage: React.FC = () => {
           state: ElementStates.Default,
           value: "",
           circle: { value: arr[i].value, state: ElementStates.Changing },
-          circleBottom: true,
+          circleSmall: true,
         };
         linkedList.changeElement(i, changes);
         setListArr([...linkedList.getElements()]);
@@ -159,9 +159,9 @@ export const ListPage: React.FC = () => {
     setHeadLoading(true);
     setDisableButton(true);
     let changes = {
-      state: ElementStates.Changing,
-      circle: { value: input, state: ElementStates.Default },
-      circleBottom: false,
+      state: ElementStates.Default,
+      circle: { value: input, state: ElementStates.Changing },
+      circleSmall: false,
     };
 
     linkedList.changeElement(0, changes);
@@ -176,10 +176,15 @@ export const ListPage: React.FC = () => {
         value: input,
         state: ElementStates.Default,
         circle: null,
-        circleBottom: false,
+        circleSmall: false,
       });
     } else {
-      linkedList.prepend(input);
+      linkedList.prepend({
+        value: input,
+        state: ElementStates.Modified,
+        circle: null,
+        circleSmall: false,
+      });
     }
 
     setListArr([...linkedList.getElements()]);
@@ -200,7 +205,7 @@ export const ListPage: React.FC = () => {
     let changes = {};
     changes = {
       circle: { value: input, state: ElementStates.Changing },
-      circleBottom: false,
+      circleSmall: false,
     };
     linkedList.changeElement(step, changes);
     setListArr([...linkedList.getElements()]);
@@ -211,7 +216,7 @@ export const ListPage: React.FC = () => {
       value: input,
       state: ElementStates.Modified,
       circle: null,
-      circleBottom: false,
+      circleSmall: false,
     });
     setListArr([...linkedList.getElements()]);
     await sleep(1000);
@@ -229,7 +234,7 @@ export const ListPage: React.FC = () => {
     const changes = {
       value: "",
       circle: { value: temp.value, state: ElementStates.Changing },
-      circleBottom: true,
+      circleSmall: true,
     };
 
     setDeleteTailLoading(true);
@@ -255,7 +260,7 @@ export const ListPage: React.FC = () => {
     linkedList.changeElement(0, {
       value: "",
       circle: { value: temp.value, state: ElementStates.Changing },
-      circleBottom: true,
+      circleSmall: true,
     });
     setListArr([...linkedList.getElements()]);
     await sleep(1000);
@@ -296,24 +301,28 @@ export const ListPage: React.FC = () => {
           />
           <Button
             text={"Добавить в head"}
+            data-testid="add-head"
             disabled={inputValue && !disableButton ? false : true}
             onClick={() => handleAddHead(inputValue!)}
             isLoader={headLoading}
           />
           <Button
             text={"Добавить в tail"}
+            data-testid="add-tail"
             disabled={inputValue && !disableButton ? false : true}
             onClick={() => handleAddTail(inputValue!)}
             isLoader={tailLoading}
           />
           <Button
             text={"Удалить из head"}
+            data-testid="delete-head"
             disabled={listArr.length > 0 && !disableButton ? false : true}
             onClick={handleDeleteHead}
             isLoader={deleteHeadLoading}
           />
           <Button
             text={"Удалить из tail"}
+            data-testid="delete-tail"
             disabled={listArr.length > 0 && !disableButton ? false : true}
             onClick={handleDeleteTail}
             isLoader={deleteTailLoading}
@@ -329,6 +338,7 @@ export const ListPage: React.FC = () => {
           />
           <Button
             text={"Добавить по индексу"}
+            data-testid="add-by-index"
             onClick={() => handleAddByIndex(inputIndex!, inputValue!)}
             disabled={
               (inputIndex as number as number) <= listArr.length - 1 &&
@@ -342,6 +352,7 @@ export const ListPage: React.FC = () => {
           />
           <Button
             text={"Удалить по индексу"}
+            data-testid="delete-by-index"
             disabled={
               (inputIndex as number) <= listArr.length - 1 &&
               (inputIndex as number) >= 0 &&
@@ -355,47 +366,50 @@ export const ListPage: React.FC = () => {
           />
         </form>
       </div>
-      <div className={styleListPage.list}>
-        {listArr &&
-          listArr.map((item, index) => {
-            return (
-              <div
-                key={Math.round(Math.random() * 1000000)}
-                className={styleListPage.arrList}
-              >
-                <div className={styleListPage.circle_top}>
-                  {item.circle && item.circleBottom === false && (
+      <div className={styleListPage.listContainer}>
+        <ul className={styleListPage.list}>
+          {listArr &&
+            listArr.map((item, index) => {
+              return (
+                <li key={index} className={styleListPage.listItem}>
+                  <div
+                    key={Math.round(Math.random() * 1000000)}
+                    className={styleListPage.arrList}
+                  >
+                    {item.circle && item.circleSmall === false && (
+                      <Circle
+                        extraClass={styleListPage.circleTop}
+                        letter={item?.circle?.value}
+                        state={item.circle?.state}
+                        isSmall
+                      />
+                    )}
                     <Circle
-                      letter={item?.circle?.value}
-                      state={item.circle?.state}
-                      isSmall
+                      letter={item.value}
+                      key={Math.round(Math.random() * index)}
+                      state={item.state}
+                      head={index === 0 && displayHead ? "head" : ""}
+                      tail={
+                        listArr.length - 1 === index && displayTail
+                          ? "tail"
+                          : ""
+                      }
+                      index={index}
                     />
-                  )}
-                </div>
-                <Circle
-                  letter={item.value}
-                  key={Math.round(Math.random() * index)}
-                  state={item.state}
-                  head={index === 0 && displayHead ? "head" : ""}
-                  tail={
-                    listArr.length - 1 === index && displayTail ? "tail" : ""
-                  }
-                  index={index}
-                />
-
-                <div className={styleListPage.circle_bottom}>
-                  {item.circle && item.circleBottom && (
-                    <Circle
-                      letter={item?.circle?.value}
-                      state={item.circle?.state}
-                      isSmall
-                    />
-                  )}
-                </div>
-                {listArr.length - 1 !== index && <ArrowIcon />}
-              </div>
-            );
-          })}
+                    {item.circle && item.circleSmall && (
+                      <Circle
+                        extraClass={styleListPage.circleBottom}
+                        letter={item?.circle?.value}
+                        state={item.circle?.state}
+                        isSmall
+                      />
+                    )}
+                    {listArr.length - 1 !== index && <ArrowIcon />}
+                  </div>
+                </li>
+              );
+            })}
+        </ul>
       </div>
     </SolutionLayout>
   );
